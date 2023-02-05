@@ -53,7 +53,7 @@ public class Planet {
  		}
 		else
 		{
-			return fx;
+			return -fx;
 		}
 
 	}
