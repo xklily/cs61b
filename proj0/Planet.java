@@ -79,7 +79,7 @@ public class Planet {
     	{
     		fx+=calcForceExertedByX(p[i]);
     	}
-    	return -fx;
+    	return fx;
     }
 
     public double calcNetForceExertedByY(Planet[] p)
