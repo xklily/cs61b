@@ -11,7 +11,7 @@ public class ArrayDeque<T>{
     }
     public boolean cRoU(){
         int Rate = size/items.length;
-        if(Rate <= 0.25){
+        if(Rate <= 0.25&&size>4){
             return false;
         }
         else{
@@ -33,6 +33,9 @@ public class ArrayDeque<T>{
         items = a;
         Front = 0;
         Back = size-1;
+    }
+    public int size(){
+        return size;
     }
     public void addFirst(T item){
         if(Front == 0){
@@ -65,6 +68,7 @@ public class ArrayDeque<T>{
         else{
             Front ++;
         }
+        size--;
         if(!this.cRoU()){
             this.rdchangesize();
         }
@@ -78,6 +82,7 @@ public class ArrayDeque<T>{
         else{
             Back--;
         }
+        size--;
         if(!this.cRoU()){
             this.rdchangesize();
         }
