@@ -99,4 +99,12 @@ public class ArrayDeque<T>{
             return items[Front+index];
         }
     }
+    public boolean isEmpty(){
+        if(Front == Back) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
         }
