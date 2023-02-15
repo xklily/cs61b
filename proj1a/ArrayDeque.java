@@ -57,7 +57,7 @@ public class ArrayDeque<T>{
             items[Head] = item;
         }
         size++;
-        if(size == items.length-1){
+        if(size == items.length-2){
             this.elchangesize();
         }
     }
@@ -70,7 +70,7 @@ public class ArrayDeque<T>{
         else{
             Tail++;
         }
-        if(size == items.length-1){
+        if(size == items.length-2){
             this.elchangesize();
         }
     }
@@ -95,11 +95,14 @@ public class ArrayDeque<T>{
         if(Head == Tail){
             return null;
         }
-        T temp = items[Tail];
+        T temp;
+
         if(Tail == 0){
+            temp = items[items.length-1];
             Tail = items.length-1;
         }
         else{
+            temp=items[Tail-1];
             Tail--;
         }
         size--;
@@ -112,8 +115,8 @@ public class ArrayDeque<T>{
         if(index > size-1){
             return null;
         }
-        else if(Head+index > items.length){
-            return items[index-(Head-items.length+1)];
+        else if(Head+index > items.length-1){
+            return items[index - (items.length - Head)];
         }
         else{
             return items[Head+index];

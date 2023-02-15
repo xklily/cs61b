@@ -99,15 +99,18 @@ public class LinkedListDeque<T>{
         }
         return p.item;
     }
-    public T getRecursive(int index) {
-        if(index > size-1){
+    private T get(IntNode p,int index){
+        if (index == 0) {
+            return p.item;
+        }
+        else if(index >= size){
             return null;
         }
-        if (index == 0)
-            return sentFront.next.item;
-        else {
-            sentFront.next = sentFront.next.next;
-            return getRecursive(index-1);
+        else{
+            return get(p.next,index-1);
         }
+    }
+    public T getRecursive(int index) {
+        return get(sentFront.next,index);
     }
     }
