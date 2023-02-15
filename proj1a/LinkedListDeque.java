@@ -107,7 +107,7 @@ public class LinkedListDeque<T>{
             return sentFront.next.item;
         else {
             sentFront.next = sentFront.next.next;
-            return getRecursive(index--);
+            return getRecursive(index-1);
         }
     }
     }

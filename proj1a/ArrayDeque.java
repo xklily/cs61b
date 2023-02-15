@@ -29,7 +29,7 @@ public class ArrayDeque<T>{
         }
         items = a;
         Head = 0;
-        Tail = size-1;
+        Tail = size;
     }
     private void rdchangesize(){
         T[] a = (T []) new Object[items.length/2];
@@ -42,7 +42,7 @@ public class ArrayDeque<T>{
         }
         items = a;
         Head = 0;
-        Tail = size-1;
+        Tail = size;
     }
     public int size(){
         return size;
@@ -57,18 +57,20 @@ public class ArrayDeque<T>{
             items[Head] = item;
         }
         size++;
-        if(size == items.length){
+        if(size == items.length-1){
             this.elchangesize();
         }
     }
     public void addLast(T item){
         items[Tail] = item;
-        Tail++;
         size++;
         if(Tail == items.length){
             Tail = 0;
         }
-        if(size == items.length){
+        else{
+            Tail++;
+        }
+        if(size == items.length-1){
             this.elchangesize();
         }
     }
