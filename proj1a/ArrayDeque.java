@@ -1,16 +1,16 @@
 public class ArrayDeque<T>{
-    private int Front;
-    private int Back;
+    private int Head;
+    private int Tail;
     private T[] items;
     private int size;
     public ArrayDeque(){
         items = (T []) new Object[8];
-        Front = 0;
-        Back = 0;
+        Head = 0;
+        Tail = 0;
         size = 0;
     }
-    public boolean cRoU(){
-        int Rate = size/items.length;
+    private boolean cRoU(){
+        double Rate = (double)size/items.length;
         if(Rate <= 0.25&&size>4){
             return false;
         }
@@ -18,69 +18,87 @@ public class ArrayDeque<T>{
             return true;
         }
     }
-    public void elchangesize(){
+    private void elchangesize(){
         T[] a = (T []) new Object[size*2];
-        System.arraycopy(items,Front,a,0,Front-items.length+1);
-        System.arraycopy(items,0,a,Front-items.length+1,Back);
+        if(Head > Tail) {
+            System.arraycopy(items, Head, a, 0, items.length -Head + 1);
+            System.arraycopy(items, 0, a, items.length -Head + 1, Tail);
+        }
+        else{
+            System.arraycopy(items,Head,a,0,size);
+        }
         items = a;
-        Front = 0;
-        Back = size-1;
+        Head = 0;
+        Tail = size-1;
     }
-    public void rdchangesize(){
-        T[] a = (T []) new Object[size/2];
-        System.arraycopy(items,Front,a,0,Front-items.length+1);
-        System.arraycopy(items,0,a,Front-items.length+1,Back);
+    private void rdchangesize(){
+        T[] a = (T []) new Object[items.length/2];
+        if(Head > Tail) {
+            System.arraycopy(items, Head, a, 0, items.length -Head + 1);
+            System.arraycopy(items, 0, a, items.length -Head + 1, Tail);
+        }
+        else{
+            System.arraycopy(items,Head,a,0,size);
+        }
         items = a;
-        Front = 0;
-        Back = size-1;
+        Head = 0;
+        Tail = size-1;
     }
     public int size(){
         return size;
     }
     public void addFirst(T item){
-        if(Front == 0){
-            items[items.length-1] = item;
-            Front = items.length-1;
-            size++;
+        if(Head == 0){
+            Head = items.length-1;
+            items[Head] = item;
         }
         else{
-            Front--;
-            items[Front] = item;
-            size++;
+            Head--;
+            items[Head] = item;
         }
-        if(size == items.length){
-            this.elchangesize();
-        }
-    }
-    public void addLast(T item){
-        items[Back] = item;
-        Back++;
         size++;
         if(size == items.length){
             this.elchangesize();
         }
     }
+    public void addLast(T item){
+        items[Tail] = item;
+        Tail++;
+        size++;
+        if(Tail == items.length){
+            Tail = 0;
+        }
+        if(size == items.length){
+            this.elchangesize();
+        }
+    }
     public T removeFirst(){
-        T temp = items[Front];
-        if(Front == items.length-1){
-            Front = 0;
+        if(Head == Tail){
+            return null;
+        }
+        T temp = items[Head];
+        if(Head == items.length-1){
+            Head = 0;
         }
         else{
-            Front ++;
+            Head ++;
         }
         size--;
         if(!this.cRoU()){
             this.rdchangesize();
         }
-        return items[Front];
+        return temp;
     }
     public T removeLast(){
-        T temp = items[Back];
-        if(Back == 0){
-            Back = items.length-1;
+        if(Head == Tail){
+            return null;
+        }
+        T temp = items[Tail];
+        if(Tail == 0){
+            Tail = items.length-1;
         }
         else{
-            Back--;
+            Tail--;
         }
         size--;
         if(!this.cRoU()){
@@ -92,19 +110,34 @@ public class ArrayDeque<T>{
         if(index > size-1){
             return null;
         }
-        else if(Front+index > items.length){
-            return items[index-(Front-items.length+1)];
+        else if(Head+index > items.length){
+            return items[index-(Head-items.length+1)];
         }
         else{
-            return items[Front+index];
+            return items[Head+index];
         }
     }
     public boolean isEmpty(){
-        if(Front == Back) {
+        if(Head == Tail) {
             return true;
         }
         else{
             return false;
+        }
+    }
+    public void printDeque() {
+        int p = Head;
+        if(Head == Tail){
+            System.out.println("The arraydeque is empty!");
+        }
+        while(p != Tail){
+            System.out.print(items[p]+" ");
+            if(p != items.length-1){
+                p++;
+            }
+            else{
+                p = 0;
+            }
         }
     }
         }
